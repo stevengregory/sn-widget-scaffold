@@ -9,7 +9,7 @@ do
   if [[ ${i} != "-a" ]]; then
     widgetFolder+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
   else
-    angularTemplate=true
+    isAngularTemplate=true
   fi
 done
 WIDGET=$(printf "%s" "${widgetFolder[@]}" && echo "")
@@ -24,7 +24,7 @@ mkdir ${PREFIX}${WIDGET} && cd $_
 touch README.md
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
-if [[ ${angularTemplate} = true ]]; then
+if [[ ${isAngularTemplate} = true ]]; then
   mkdir angular-template
   touch angular-template/${PREFIX}${WIDGET}.${HTML}
 fi
