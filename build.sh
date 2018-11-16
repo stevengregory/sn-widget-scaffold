@@ -2,17 +2,17 @@ source config.sh
 
 echo "${GREEN}Getting started${RESET_COLOR}"
 
-declare -a arr1=($@)
-declare -a test2=()
-for i in "${arr1[@]}"
+declare -a args=($@)
+declare -a widgetFolder=()
+for i in "${args[@]}"
 do
   if [[ ${i} != "-a" ]]; then
-    test2+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
+    widgetFolder+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
   else
     angularTemplate=true
   fi
 done
-WIDGET=$(printf "%s" "${test2[@]}" && echo "")
+WIDGET=$(printf "%s" "${widgetFolder[@]}" && echo "")
 
 echo "${GREEN}Creating feature branch...${RESET_COLOR}"
 
@@ -34,23 +34,23 @@ touch ${PREFIX}${WIDGET}.${HTML}
 touch ${PREFIX}${WIDGET}.${CSS}
 
 if [[ $1 == *-* ]]; then
-  declare -a wahoo=()
+  declare -a dashName=()
   IN=$1
-  IFS='-' read -ra ADDR <<< "$IN"
-  for i in "${ADDR[@]}"; do
-    wahoo+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
+  IFS='-' read -ra INPUT <<< "$IN"
+  for i in "${INPUT[@]}"; do
+    dashName+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
   done
-  controllerSuffix=$(printf "%s" "${wahoo[@]}" && echo "")
+  controllerSuffix=$(printf "%s" "${dashName[@]}" && echo "")
 else
-  declare -a arr=($@)
-  declare -a test=()
-  for i in "${arr[@]}"
+  declare -a inputArgs=($@)
+  declare -a spaceName=()
+  for i in "${inputArgs[@]}"
   do
     if [[ ${i} != "-a" ]]; then
-      test+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
+      spaceName+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
     fi
   done
-  controllerSuffix=$(printf "%s" "${test[@]}" && echo "")
+  controllerSuffix=$(printf "%s" "${spaceName[@]}" && echo "")
 fi
 
 echo "function ${controllerSuffix}Controller() {" > ${PREFIX}${WIDGET}.${CLIENT}
