@@ -24,11 +24,11 @@ touch README.md
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
 if [[ ${isAngularTemplate} = true ]]; then
-  mkdir angular-template
-  touch angular-template/${PREFIX}${WIDGET}.${HTML}
+  mkdir ${ANGULAR_TEMPLATE_DIRECTORY}
+  touch ${ANGULAR_TEMPLATE_DIRECTORY}/${PREFIX}${WIDGET}.${HTML}
 fi
 
-mkdir widget && cd $_
+mkdir ${WIDGET_DIRECTORY} && cd $_
 touch ${PREFIX}${WIDGET}.${HTML}
 touch ${PREFIX}${WIDGET}.${CSS}
 
