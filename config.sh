@@ -3,10 +3,10 @@ GREEN='\033[0;32m'
 RESET_COLOR='\033[0m'
 
 # directories
-ANGULAR_TEMPLATE_DIRECTORY=angular-template
-SCRIPT_INCLUDE_DIRECTORY=script-include
-UI_SCRIPT_DIRECTORY=ui-script
-WIDGET_DIRECTORY=widget
+ANGULAR_TEMPLATE_DIR=angular-template
+SCRIPT_INCLUDE_DIR=script-include
+UI_SCRIPT_DIR=ui-script
+WIDGET_DIR=widget
 
 # extensions
 CLIENT=u-client-script.js

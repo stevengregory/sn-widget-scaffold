@@ -3,7 +3,7 @@ source config.sh
 echo "${GREEN}Getting started${RESET_COLOR}"
 
 declare -a args=($@)
-declare -a widgetFolder=()
+declare -a widgetDir=()
 for i in "${args[@]}"; do
   if [[ ${i} == "-a" ]]; then
     isAngularTemplate=true
@@ -12,10 +12,10 @@ for i in "${args[@]}"; do
   elif [[ ${i} == "-u" ]]; then
     isUIScript=true
   else
-    widgetFolder+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
+    widgetDir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
   fi
 done
-WIDGET=$(printf "%s" "${widgetFolder[@]}" && echo "")
+WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
 
 echo "${GREEN}Creating feature branch...${RESET_COLOR}"
 
@@ -28,21 +28,21 @@ touch README.md
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
 if [[ ${isAngularTemplate} = true ]]; then
-  mkdir ${ANGULAR_TEMPLATE_DIRECTORY}
-  touch ${ANGULAR_TEMPLATE_DIRECTORY}/${PREFIX}${WIDGET}.${HTML}
+  mkdir ${ANGULAR_TEMPLATE_DIR}
+  touch ${ANGULAR_TEMPLATE_DIR}/${PREFIX}${WIDGET}.${HTML}
 fi
 
 if [[ ${isScriptInclude} = true ]]; then
-  mkdir ${SCRIPT_INCLUDE_DIRECTORY}
-  touch ${SCRIPT_INCLUDE_DIRECTORY}/${PREFIX}${WIDGET}.${SERVER}
+  mkdir ${SCRIPT_INCLUDE_DIR}
+  touch ${SCRIPT_INCLUDE_DIR}/${PREFIX}${WIDGET}.${SERVER}
 fi
 
 if [[ ${isUIScript} = true ]]; then
-  mkdir ${UI_SCRIPT_DIRECTORY}
-  touch ${UI_SCRIPT_DIRECTORY}/${PREFIX}${WIDGET}.${CLIENT}
+  mkdir ${UI_SCRIPT_DIR}
+  touch ${UI_SCRIPT_DIR}/${PREFIX}${WIDGET}.${CLIENT}
 fi
 
-mkdir ${WIDGET_DIRECTORY} && cd $_
+mkdir ${WIDGET_DIR} && cd $_
 touch ${PREFIX}${WIDGET}.${HTML}
 touch ${PREFIX}${WIDGET}.${CSS}
 
