@@ -13,8 +13,14 @@ for i in "${args[@]}"; do
     isUIScript=true
   else
     widgetDir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
+    if [[ ${i} != ${*: -1:1} ]]; then
+      widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    else
+      widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
+    fi
   fi
 done
+echo $(printf "%s" "${test} " && echo "")
 WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
 
 echo "${GREEN}Creating feature branch...${RESET_COLOR}"
@@ -24,7 +30,13 @@ git checkout -b feature/${PREFIX}${WIDGET} master
 echo "${GREEN}Starting widget scaffold...${RESET_COLOR}"
 
 mkdir ${PREFIX}${WIDGET} && cd $_
-touch README.md
+curl ${README_GIST} > README.md
+if [[ ${isAngularTemplate} == true || ${isScriptInclude} == true || ${isUIScript} == true ]]; then
+  sed -i '' -e "s/Angular Line Chart/${widgetName%?}/g" README.md
+else
+  sed -i '' -e "s/Angular Line Chart/${widgetName}/g" README.md
+fi
+sed -i '' -e "s/pe-angular-line-chart/${PREFIX}${WIDGET}/g" README.md
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
 if [[ ${isAngularTemplate} = true ]]; then
@@ -43,7 +55,10 @@ if [[ ${isUIScript} = true ]]; then
 fi
 
 mkdir ${WIDGET_DIR} && cd $_
-touch ${PREFIX}${WIDGET}.${HTML}
+
+echo "<div>" > ${PREFIX}${WIDGET}.${HTML}
+echo "<!-- your widget template -->" >> ${PREFIX}${WIDGET}.${HTML}
+echo "</div>" >> ${PREFIX}${WIDGET}.${HTML}
 touch ${PREFIX}${WIDGET}.${CSS}
 
 if [[ $1 == *-* ]]; then

@@ -1,4 +1,4 @@
-#colors
+# colors
 GREEN='\033[0;32m'
 RESET_COLOR='\033[0m'
 
@@ -17,6 +17,7 @@ SERVER=u-server-script.js
 UPDATE_SET=u-update-set.xml
 
 # gists
+README_GIST=https://gist.githubusercontent.com/stevengregory/a6f66f2ec00febe4fc3edafe186c1e35/raw/5e5710ab5bd49e0768c2d9a4d2d5e53b87416d1c/README.md
 SERVER_GIST=https://gist.githubusercontent.com/stevengregory/1fc0b7ca85144786182c74d7b7013e3c/raw/b7b743c1e8d1abc5e8996adb6bf9628ee2819d11/server.js
 
 # prefix
