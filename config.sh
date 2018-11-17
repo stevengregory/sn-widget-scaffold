@@ -6,7 +6,7 @@ RESET_COLOR='\033[0m'
 ANGULAR_TEMPLATE_DIRECTORY=angular-template
 SCRIPT_INCLUDE_DIRECTORY=script-include
 UI_SCRIPT_DIRECTORY=ui-script
-WIDGET_DIRECTORY=widgets
+WIDGET_DIRECTORY=widget
 
 # extensions
 CLIENT=u-client-script.js

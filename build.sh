@@ -5,10 +5,14 @@ echo "${GREEN}Getting started${RESET_COLOR}"
 declare -a args=($@)
 declare -a widgetFolder=()
 for i in "${args[@]}"; do
-  if [[ ${i} != "-a" ]]; then
-    widgetFolder+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
-  else
+  if [[ ${i} == "-a" ]]; then
     isAngularTemplate=true
+  elif [[ ${i} == "-s" ]]; then
+    isScriptInclude=true
+  elif [[ ${i} == "-u" ]]; then
+    isUIScript=true
+  else
+    widgetFolder+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
   fi
 done
 WIDGET=$(printf "%s" "${widgetFolder[@]}" && echo "")
@@ -28,6 +32,16 @@ if [[ ${isAngularTemplate} = true ]]; then
   touch ${ANGULAR_TEMPLATE_DIRECTORY}/${PREFIX}${WIDGET}.${HTML}
 fi
 
+if [[ ${isScriptInclude} = true ]]; then
+  mkdir ${SCRIPT_INCLUDE_DIRECTORY}
+  touch ${SCRIPT_INCLUDE_DIRECTORY}/${PREFIX}${WIDGET}.${SERVER}
+fi
+
+if [[ ${isUIScript} = true ]]; then
+  mkdir ${UI_SCRIPT_DIRECTORY}
+  touch ${UI_SCRIPT_DIRECTORY}/${PREFIX}${WIDGET}.${CLIENT}
+fi
+
 mkdir ${WIDGET_DIRECTORY} && cd $_
 touch ${PREFIX}${WIDGET}.${HTML}
 touch ${PREFIX}${WIDGET}.${CSS}
@@ -44,7 +58,7 @@ else
   declare -a inputArgs=($@)
   declare -a spaceName=()
   for i in "${inputArgs[@]}"; do
-    if [[ ${i} != "-a" ]]; then
+    if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
       spaceName+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
     fi
   done
