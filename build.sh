@@ -37,7 +37,8 @@ if [[ $1 == *-* ]]; then
   declare -a dashName=()
   IN=$1
   IFS='-' read -ra INPUT <<< "$IN"
-  for i in "${INPUT[@]}"; do
+  for i in "${INPUT[@]}"
+  do
     dashName+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
   done
   controllerSuffix=$(printf "%s" "${dashName[@]}" && echo "")
