@@ -13,11 +13,11 @@ for i in "${args[@]}"; do
     isUIScript=true
   else
     widgetDir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
-    widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    readmeName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
     # if [[ ${i} != ${*: -1:1} ]]; then
-    #   widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    #   readmeName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
     # else
-    #   widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
+    #   readmeName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
     # fi
   fi
 done
@@ -33,9 +33,9 @@ mkdir ${PREFIX}${WIDGET} && cd $_
 
 curl ${README_GIST} > README.md
 
-if [[ ${widgetName} == *-* ]]; then
+if [[ ${readmeName} == *-* ]]; then
   declare -a dashReadme=()
-  RM=${widgetName}
+  RM=${readmeName}
   IFS='-' read -ra README <<< "$RM"
   for i in "${README[@]}"; do
     if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
@@ -44,7 +44,7 @@ if [[ ${widgetName} == *-* ]]; then
   done
   sed -i '' -e "s/Angular Line Chart/${dashReadme}/g" README.md
 else
-  sed -i '' -e "s/Angular Line Chart/${widgetName}/g" README.md
+  sed -i '' -e "s/Angular Line Chart/${readmeName}/g" README.md
 fi
 sed -i '' -e "s/pe-angular-line-chart/${PREFIX}${WIDGET}/g" README.md
 
