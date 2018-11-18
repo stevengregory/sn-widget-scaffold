@@ -14,11 +14,6 @@ for i in "${args[@]}"; do
   else
     widgetDir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
     readmeName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
-    # if [[ ${i} != ${*: -1:1} ]]; then
-    #   readmeName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
-    # else
-    #   readmeName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
-    # fi
   fi
 done
 WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
