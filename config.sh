@@ -22,3 +22,7 @@ SERVER_GIST=https://gist.githubusercontent.com/stevengregory/1fc0b7ca85144786182
 
 # prefix
 PREFIX=pe
+
+# temp content
+TEMP_NAME=Angular Line Chart
+TEMP_DIR=pe-angular-line-chart
