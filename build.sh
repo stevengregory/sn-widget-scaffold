@@ -13,14 +13,14 @@ for i in "${args[@]}"; do
     isUIScript=true
   else
     widgetDir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
-    if [[ ${i} != ${*: -1:1} ]]; then
-      widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
-    else
-      widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
-    fi
+    widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    # if [[ ${i} != ${*: -1:1} ]]; then
+    #   widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    # else
+    #   widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
+    # fi
   fi
 done
-echo $(printf "%s" "${test} " && echo "")
 WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
 
 echo "${GREEN}Creating feature branch...${RESET_COLOR}"
@@ -30,13 +30,24 @@ git checkout -b feature/${PREFIX}${WIDGET} master
 echo "${GREEN}Starting widget scaffold...${RESET_COLOR}"
 
 mkdir ${PREFIX}${WIDGET} && cd $_
+
 curl ${README_GIST} > README.md
-if [[ ${isAngularTemplate} == true || ${isScriptInclude} == true || ${isUIScript} == true ]]; then
-  sed -i '' -e "s/Angular Line Chart/${widgetName%?}/g" README.md
+
+if [[ ${widgetName} == *-* ]]; then
+  declare -a dashReadme=()
+  RM=${widgetName}
+  IFS='-' read -ra README <<< "$RM"
+  for i in "${README[@]}"; do
+    if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
+      dashReadme+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    fi
+  done
+  sed -i '' -e "s/Angular Line Chart/${dashReadme}/g" README.md
 else
   sed -i '' -e "s/Angular Line Chart/${widgetName}/g" README.md
 fi
 sed -i '' -e "s/pe-angular-line-chart/${PREFIX}${WIDGET}/g" README.md
+
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
 if [[ ${isAngularTemplate} = true ]]; then
