@@ -20,6 +20,8 @@ WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
 
 echo "${GREEN}Creating feature branch...${RESET_COLOR}"
 
+#!/usr/bin/env bash
+
 git checkout -b feature/${PREFIX}${WIDGET} master
 
 echo "${GREEN}Starting widget scaffold...${RESET_COLOR}"
