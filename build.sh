@@ -42,9 +42,9 @@ if [[ ${readmeName} == *-* ]]; then
       dashReadme+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
     fi
   done
-  sed -i '' -e "s/Angular Line Chart/${dashReadme}/g" README.md
+  sed -i '' -e "s/Angular Line Chart/${dashReadme%??}/g" README.md
 else
-  sed -i '' -e "s/Angular Line Chart/${readmeName}/g" README.md
+  sed -i '' -e "s/Angular Line Chart/${readmeName%?}/g" README.md
 fi
 sed -i '' -e "s/pe-angular-line-chart/${PREFIX}${WIDGET}/g" README.md
 
