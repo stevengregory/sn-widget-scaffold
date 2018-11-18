@@ -1,4 +1,4 @@
-source config.sh
+source ./scripts/config.sh
 
 echo "${GREEN}Getting started${RESET_COLOR}"
 
@@ -19,8 +19,6 @@ done
 WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
 
 echo "${GREEN}Creating feature branch...${RESET_COLOR}"
-
-#!/usr/bin/env bash
 
 git checkout -b feature/${PREFIX}${WIDGET} master
 
