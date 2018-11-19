@@ -1,7 +1,3 @@
-# colors
-GREEN='\033[0;32m'
-RESET_COLOR='\033[0m'
-
 # directories
 ANGULAR_TEMPLATE_DIR=angular-template
 SCRIPT_INCLUDE_DIR=script-include

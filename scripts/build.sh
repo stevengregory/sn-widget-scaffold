@@ -1,6 +1,7 @@
 source ./scripts/config.sh
+source ./scripts/messages.sh
 
-echo "${GREEN}Getting started${RESET_COLOR}"
+echo "${GREEN}${START_MSG}${RESET_COLOR}"
 
 declare -a args=($@)
 declare -a widgetDir=()
@@ -18,11 +19,11 @@ for i in "${args[@]}"; do
 done
 WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
 
-echo "${GREEN}Creating feature branch...${RESET_COLOR}"
+echo "${GREEN}${BRANCH_MSG}${RESET_COLOR}"
 
 git checkout -b feature/${PREFIX}${WIDGET} master
 
-echo "${GREEN}Starting widget scaffold...${RESET_COLOR}"
+echo "${GREEN}${SCAFFOLD_MSG}${RESET_COLOR}"
 
 mkdir ${PREFIX}${WIDGET} && cd $_
 
@@ -92,4 +93,4 @@ echo "}" >> ${PREFIX}${WIDGET}.${CLIENT}
 touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
 
-echo "${GREEN}Done${RESET_COLOR}"
+echo "${GREEN}${DONE_MSG}${RESET_COLOR}"
