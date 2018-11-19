@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # directories
 ANGULAR_TEMPLATE_DIR=angular-template
 SCRIPT_INCLUDE_DIR=script-include
