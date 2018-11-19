@@ -3,7 +3,7 @@
 source ./scripts/config.sh
 source ./scripts/messages.sh
 
-echo "${GREEN}${START_MSG}${RESET_COLOR}"
+echo -e "${GREEN}${START_MSG}${RESET}"
 
 declare -a args=($@)
 declare -a widgetDir=()
@@ -21,11 +21,11 @@ for i in "${args[@]}"; do
 done
 WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
 
-echo "${GREEN}${BRANCH_MSG}${RESET_COLOR}"
+echo -e "${GREEN}${BRANCH_MSG}${RESET}"
 
 git checkout -b feature/${PREFIX}${WIDGET} master
 
-echo "${GREEN}${SCAFFOLD_MSG}${RESET_COLOR}"
+echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
 
 mkdir ${PREFIX}${WIDGET} && cd $_
 
@@ -95,4 +95,4 @@ echo "}" >> ${PREFIX}${WIDGET}.${CLIENT}
 touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
 
-echo "${GREEN}${DONE_MSG}${RESET_COLOR}"
+echo -e "${GREEN}${DONE_MSG}${RESET}"
