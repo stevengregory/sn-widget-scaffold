@@ -5,6 +5,15 @@ source ./scripts/messages.sh
 
 echo -e "${GREEN}${START_MSG}${RESET}"
 
+branch_checkout() {
+  local branch=feature/${PREFIX}${WIDGET}
+  if [[ $(git branch --list ${branch}) ]]; then
+    git checkout ${branch}
+  else
+    git checkout -b feature/${PREFIX}${WIDGET} origin/master
+  fi
+}
+
 create_option_dir() {
   mkdir ${1}
   touch ${1}/${PREFIX}${WIDGET}.${2}
@@ -50,7 +59,7 @@ WIDGET=$(printf "%s" "${widget_dir[@]}" && echo "")
 
 echo -e "${GREEN}${BRANCH_MSG}${RESET}"
 
-git checkout -b feature/${PREFIX}${WIDGET} master
+branch_checkout
 
 echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
 
@@ -60,6 +69,7 @@ curl ${README_GIST} > README.md
 curl ${CONFIG_GIST} > config.json
 
 echo -e "${GREEN}${UPDATE_MSG}${RESET}"
+
 if [[ ${widget_name} == *-* ]]; then
   declare -a dash_readme=()
   RM=${widget_name}
