@@ -10,7 +10,7 @@ branch_checkout() {
   if [[ $(git branch --list ${branch}) ]]; then
     git checkout ${branch}
   else
-    git checkout -b feature/${PREFIX}${WIDGET} origin/master
+    git checkout -b ${branch} origin/master
   fi
 }
 
