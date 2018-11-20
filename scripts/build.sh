@@ -5,6 +5,11 @@ source ./scripts/messages.sh
 
 echo -e "${GREEN}${START_MSG}${RESET}"
 
+function create_option_dir() {
+  mkdir ${1}
+  touch ${1}/${PREFIX}${WIDGET}.${2}
+}
+
 function fetch_github_user() {
   if [[ $(git config user.name) ]]; then
     echo $(git config user.name)
@@ -62,18 +67,15 @@ sed -i '' -e "s/${TEMP_DIR}/${PREFIX}${WIDGET}/g" README.md
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
 if [[ ${isAngularTemplate} = true ]]; then
-  mkdir ${ANGULAR_TEMPLATE_DIR}
-  touch ${ANGULAR_TEMPLATE_DIR}/${PREFIX}${WIDGET}.${HTML}
+  create_option_dir ${ANGULAR_TEMPLATE_DIR} ${HTML}
 fi
 
 if [[ ${isScriptInclude} = true ]]; then
-  mkdir ${SCRIPT_INCLUDE_DIR}
-  touch ${SCRIPT_INCLUDE_DIR}/${PREFIX}${WIDGET}.${SERVER}
+  create_option_dir ${SCRIPT_INCLUDE_DIR} ${SERVER}
 fi
 
 if [[ ${isUIScript} = true ]]; then
-  mkdir ${UI_SCRIPT_DIR}
-  touch ${UI_SCRIPT_DIR}/${PREFIX}${WIDGET}.${CLIENT}
+  create_option_dir ${UI_SCRIPT_DIR} ${CLIENT}
 fi
 
 mkdir ${WIDGET_DIR} && cd $_
