@@ -18,15 +18,25 @@ function fetch_github_user() {
   fi
 }
 
+function flag_options() {
+  case $1 in
+  "-a")
+    isAngularTemplate=true
+    ;;
+  "-s")
+    isScriptInclude=true
+    ;;
+  "-u")
+    isUIScript=true
+    ;;
+  esac
+}
+
 declare -a args=($@)
 declare -a widgetDir=()
 for i in "${args[@]}"; do
-  if [[ ${i} == "-a" ]]; then
-    isAngularTemplate=true
-  elif [[ ${i} == "-s" ]]; then
-    isScriptInclude=true
-  elif [[ ${i} == "-u" ]]; then
-    isUIScript=true
+  if [[ ${i} == "-a" || ${i} == "-s" || ${i} == "-u" ]]; then
+    flag_options ${i}
   else
     widgetDir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
     widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
