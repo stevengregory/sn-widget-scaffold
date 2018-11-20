@@ -89,10 +89,7 @@ if [[ ${is_ui_script} = true ]]; then
 fi
 
 mkdir ${WIDGET_DIR} && cd $_
-
-echo "<div>" > ${PREFIX}${WIDGET}.${HTML}
-echo "<!-- your widget template -->" >> ${PREFIX}${WIDGET}.${HTML}
-echo "</div>" >> ${PREFIX}${WIDGET}.${HTML}
+curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
 touch ${PREFIX}${WIDGET}.${CSS}
 
 if [[ $1 == *-* ]]; then
