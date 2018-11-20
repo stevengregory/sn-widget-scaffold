@@ -5,6 +5,14 @@ source ./scripts/messages.sh
 
 echo -e "${GREEN}${START_MSG}${RESET}"
 
+function fetch_github_user() {
+  if [[ $(git config user.name) ]]; then
+    echo $(git config user.name)
+  else
+    echo ${TEMP_CONTRIB}
+  fi
+}
+
 declare -a args=($@)
 declare -a widgetDir=()
 for i in "${args[@]}"; do
@@ -48,6 +56,7 @@ else
   sed -i '' -e "s/${TEMP_NAME}/${readmeName%?}/g" README.md
   sed -i '' -e "s/${TEMP_NAME}/${dashReadme%??}/g" config.json
 fi
+sed -i '' -e "s/${TEMP_CONTRIB}/$(fetch_github_user)/g" config.json
 sed -i '' -e "s/${TEMP_DIR}/${PREFIX}${WIDGET}/g" README.md
 
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
