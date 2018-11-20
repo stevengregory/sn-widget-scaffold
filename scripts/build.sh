@@ -30,7 +30,9 @@ echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
 mkdir ${PREFIX}${WIDGET} && cd $_
 
 curl ${README_GIST} > README.md
+curl ${CONFIG_GIST} > config.json
 
+echo -e "${GREEN}${UPDATE_MSG}${RESET}"
 if [[ ${readmeName} == *-* ]]; then
   declare -a dashReadme=()
   RM=${readmeName}
@@ -41,8 +43,10 @@ if [[ ${readmeName} == *-* ]]; then
     fi
   done
   sed -i '' -e "s/${TEMP_NAME}/${dashReadme%??}/g" README.md
+  sed -i '' -e "s/${TEMP_NAME}/${dashReadme%??}/g" config.json
 else
   sed -i '' -e "s/${TEMP_NAME}/${readmeName%?}/g" README.md
+  sed -i '' -e "s/${TEMP_NAME}/${dashReadme%??}/g" config.json
 fi
 sed -i '' -e "s/${TEMP_DIR}/${PREFIX}${WIDGET}/g" README.md
 
