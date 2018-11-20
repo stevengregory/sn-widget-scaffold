@@ -111,9 +111,9 @@ else
   controller_suffix=$(printf "%s" "${space_name[@]}" && echo "")
 fi
 
-echo "function ${controller_suffix}Controller() {" > ${PREFIX}${WIDGET}.${CLIENT}
-echo "  var c = this;" >> ${PREFIX}${WIDGET}.${CLIENT}
-echo "}" >> ${PREFIX}${WIDGET}.${CLIENT}
+curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
+sed -i '' -e "s/${TEMP_CTRL}/${controller_suffix}/g" ${PREFIX}${WIDGET}.${CLIENT}
+
 touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
 
