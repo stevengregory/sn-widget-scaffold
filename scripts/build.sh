@@ -32,6 +32,10 @@ flag_options() {
   esac
 }
 
+replace_content() {
+  sed -i '' -e "s/${1}/${2}/g" ${3}
+}
+
 declare -a args=($@)
 declare -a widget_dir=()
 for i in "${args[@]}"; do
@@ -65,14 +69,14 @@ if [[ ${widget_name} == *-* ]]; then
       dash_readme+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
     fi
   done
-  sed -i '' -e "s/${TEMP_NAME}/${dash_readme%??}/g" README.md
-  sed -i '' -e "s/${TEMP_NAME}/${dash_readme%??}/g" config.json
+  replace_content "${TEMP_NAME}" "${dash_readme%??}" README.md
+  replace_content "${TEMP_NAME}" "${dash_readme%??}" config.json
 else
-  sed -i '' -e "s/${TEMP_NAME}/${widget_name%?}/g" README.md
-  sed -i '' -e "s/${TEMP_NAME}/${dash_readme%??}/g" config.json
+  replace_content "${TEMP_NAME}" "${widget_name%?}" README.md
+  replace_content "${TEMP_NAME}" "${dash_readme%??}" config.json
 fi
-sed -i '' -e "s/${TEMP_CONTRIB}/$(fetch_github_user)/g" config.json
-sed -i '' -e "s/${TEMP_DIR}/${PREFIX}${WIDGET}/g" README.md
+replace_content "${TEMP_CONTRIB}" "$(fetch_github_user)" config.json
+replace_content "${TEMP_DIR}" "${PREFIX}${WIDGET}" README.md
 
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
@@ -112,7 +116,7 @@ else
 fi
 
 curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
-sed -i '' -e "s/${TEMP_CTRL}/${controller_suffix}/g" ${PREFIX}${WIDGET}.${CLIENT}
+replace_content ${TEMP_CTRL} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
 
 touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
