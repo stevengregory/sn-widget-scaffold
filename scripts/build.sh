@@ -29,7 +29,7 @@ for i in "${args[@]}"; do
     isUIScript=true
   else
     widgetDir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
-    readmeName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    widgetName+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
   fi
 done
 WIDGET=$(printf "%s" "${widgetDir[@]}" && echo "")
@@ -46,9 +46,9 @@ curl ${README_GIST} > README.md
 curl ${CONFIG_GIST} > config.json
 
 echo -e "${GREEN}${UPDATE_MSG}${RESET}"
-if [[ ${readmeName} == *-* ]]; then
+if [[ ${widgetName} == *-* ]]; then
   declare -a dashReadme=()
-  RM=${readmeName}
+  RM=${widgetName}
   IFS='-' read -ra README <<< "$RM"
   for i in "${README[@]}"; do
     if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
@@ -58,7 +58,7 @@ if [[ ${readmeName} == *-* ]]; then
   sed -i '' -e "s/${TEMP_NAME}/${dashReadme%??}/g" README.md
   sed -i '' -e "s/${TEMP_NAME}/${dashReadme%??}/g" config.json
 else
-  sed -i '' -e "s/${TEMP_NAME}/${readmeName%?}/g" README.md
+  sed -i '' -e "s/${TEMP_NAME}/${widgetName%?}/g" README.md
   sed -i '' -e "s/${TEMP_NAME}/${dashReadme%??}/g" config.json
 fi
 sed -i '' -e "s/${TEMP_CONTRIB}/$(fetch_github_user)/g" config.json
