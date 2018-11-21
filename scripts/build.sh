@@ -56,6 +56,10 @@ flag_options() {
   esac
 }
 
+format_data() {
+  echo $(printf "%s" $1)
+}
+
 has_dashes() {
   if [[ ${args[0]} == *-* ]]; then
     name_has_dashes=true
@@ -103,7 +107,7 @@ setup_controller_suffix() {
     for i in "${input[@]}"; do
       dash_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
     done
-    controller_suffix=$(printf "%s" "${dash_name[@]}" && echo "")
+    controller_suffix=$(format_data ${dash_name[@]})
   else
     local space_name=()
     for i in "${args[@]}"; do
@@ -111,7 +115,7 @@ setup_controller_suffix() {
         space_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
       fi
     done
-    controller_suffix=$(printf "%s" "${space_name[@]}" && echo "")
+    controller_suffix=$(format_data ${space_name[@]})
   fi
 }
 
@@ -125,7 +129,7 @@ set_widget_name() {
       widget_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
     fi
   done
-  WIDGET=$(printf "%s" "${widget_dir[@]}" && echo "")
+  WIDGET=$(format_data ${widget_dir[@]})
 }
 
 sub_base_content() {
