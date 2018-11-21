@@ -3,8 +3,6 @@
 source ./scripts/config.sh
 source ./scripts/messages.sh
 
-echo -e "${GREEN}${START_MSG}${RESET}"
-
 branch_checkout() {
   local branch=feature/${PREFIX}${WIDGET}
   if [[ $(git branch --list ${branch}) ]]; then
@@ -62,6 +60,22 @@ has_dashes() {
   if [[ ${args[0]} == *-* ]]; then
     name_has_dashes=true
   fi
+}
+
+main() {
+  echo -e "${GREEN}${START_MSG}${RESET}"
+  set_widget_name
+  echo -e "${GREEN}${BRANCH_MSG}${RESET}"
+  branch_checkout
+  echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
+  create_base_dir
+  echo -e "${GREEN}${UPDATE_MSG}${RESET}"
+  sub_base_content
+  echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
+  scaffold_option_dirs
+  setup_controller_suffix
+  create_widget_dir
+  echo -e "${GREEN}${DONE_MSG}${RESET}"
 }
 
 replace_content() {
@@ -135,25 +149,4 @@ sub_base_content() {
 }
 
 args=($@)
-
-set_widget_name
-
-echo -e "${GREEN}${BRANCH_MSG}${RESET}"
-
-branch_checkout
-
-echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
-
-create_base_dir
-
-echo -e "${GREEN}${UPDATE_MSG}${RESET}"
-
-sub_base_content
-
-echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
-
-scaffold_option_dirs
-setup_controller_suffix
-create_widget_dir
-
-echo -e "${GREEN}${DONE_MSG}${RESET}"
+main
