@@ -25,7 +25,7 @@ TEMPLATE_GIST=https://gist.githubusercontent.com/stevengregory/c8e3c187499fd6cbc
 PREFIX=pe
 
 # temp content
-TEMP_CONTRIB='Bruce Lee'
-TEMP_CTRL='Test'
-TEMP_DIR='pe-angular-line-chart'
-TEMP_NAME='Angular Line Chart'
+CONTRIB_TEMP='Bruce Lee'
+CTRL_TEMP='Test'
+DIR_TEMP='pe-angular-line-chart'
+NAME_TEMP='Angular Line Chart'

@@ -23,7 +23,7 @@ fetch_github_user() {
   if [[ $(git config user.name) ]]; then
     echo $(git config user.name)
   else
-    echo ${TEMP_CONTRIB}
+    echo ${CONTRIB_TEMP}
   fi
 }
 
@@ -79,14 +79,14 @@ if [[ ${widget_name} == *-* ]]; then
       dash_readme+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
     fi
   done
-  replace_content "${TEMP_NAME}" "${dash_readme%??}" README.md
-  replace_content "${TEMP_NAME}" "${dash_readme%??}" config.json
+  replace_content "${NAME_TEMP}" "${dash_readme%??}" README.md
+  replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
 else
-  replace_content "${TEMP_NAME}" "${widget_name%?}" README.md
-  replace_content "${TEMP_NAME}" "${dash_readme%??}" config.json
+  replace_content "${NAME_TEMP}" "${widget_name%?}" README.md
+  replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
 fi
-replace_content "${TEMP_CONTRIB}" "$(fetch_github_user)" config.json
-replace_content "${TEMP_DIR}" "${PREFIX}${WIDGET}" README.md
+replace_content "${CONTRIB_TEMP}" "$(fetch_github_user)" config.json
+replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
 
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
@@ -126,7 +126,7 @@ else
 fi
 
 curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
-replace_content ${TEMP_CTRL} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
+replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
 
 touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
