@@ -58,23 +58,51 @@ flag_options() {
   esac
 }
 
+name_has_dashes() {
+  if [[ ${args[0]} == *-* ]]; then
+    has_dashes=true
+  fi
+}
+
 replace_content() {
   sed -i '' -e "s/${1}/${2}/g" ${3}
 }
 
 scaffold_option_dirs() {
-  if [[ ${is_angular_template} = true ]]; then
+  if [[ ${is_angular_template} == true ]]; then
     create_option_dir ${ANGULAR_TEMPLATE_DIR} ${HTML}
   fi
-  if [[ ${is_script_include} = true ]]; then
+  if [[ ${is_script_include} == true ]]; then
     create_option_dir ${SCRIPT_INCLUDE_DIR} ${SERVER}
   fi
-  if [[ ${is_ui_script} = true ]]; then
+  if [[ ${is_ui_script} == true ]]; then
     create_option_dir ${UI_SCRIPT_DIR} ${CLIENT}
   fi
 }
 
-declare -a args=($@)
+setup_controller_suffix() {
+  name_has_dashes
+  if [[ ${has_dashes} == true ]]; then
+    local dash_name=()
+    local in=${args[0]}
+    IFS='-' read -ra input <<< "$in"
+    for i in "${input[@]}"; do
+      dash_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
+    done
+    controller_suffix=$(printf "%s" "${dash_name[@]}" && echo "")
+  else
+    local space_name=()
+    for i in "${args[@]}"; do
+      if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
+        space_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
+      fi
+    done
+    controller_suffix=$(printf "%s" "${space_name[@]}" && echo "")
+  fi
+}
+
+args=($@)
+
 declare -a widget_dir=()
 for i in "${args[@]}"; do
   if [[ ${i} == "-a" || ${i} == "-s" || ${i} == "-u" ]]; then
@@ -117,26 +145,7 @@ replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
 echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
 
 scaffold_option_dirs
-
-if [[ $1 == *-* ]]; then
-  declare -a dash_name=()
-  IN=$1
-  IFS='-' read -ra INPUT <<< "$IN"
-  for i in "${INPUT[@]}"; do
-    dash_name+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
-  done
-  controller_suffix=$(printf "%s" "${dash_name[@]}" && echo "")
-else
-  declare -a input_args=($@)
-  declare -a space_name=()
-  for i in "${input_args[@]}"; do
-    if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
-      space_name+="$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"
-    fi
-  done
-  controller_suffix=$(printf "%s" "${space_name[@]}" && echo "")
-fi
-
+setup_controller_suffix
 create_widget_dir
 
 echo -e "${GREEN}${DONE_MSG}${RESET}"
