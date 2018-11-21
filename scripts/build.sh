@@ -14,6 +14,13 @@ branch_checkout() {
   fi
 }
 
+create_base_dir() {
+  mkdir ${PREFIX}${WIDGET} && cd $_
+  curl ${CONFIG_GIST} > config.json
+  curl ${README_GIST} > README.md
+  touch ${PREFIX}${WIDGET}.${UPDATE_SET}
+}
+
 create_option_dir() {
   mkdir ${1}
   touch ${1}/${PREFIX}${WIDGET}.${2}
@@ -75,10 +82,7 @@ branch_checkout
 
 echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
 
-mkdir ${PREFIX}${WIDGET} && cd $_
-curl ${CONFIG_GIST} > config.json
-curl ${README_GIST} > README.md
-touch ${PREFIX}${WIDGET}.${UPDATE_SET}
+create_base_dir
 
 echo -e "${GREEN}${UPDATE_MSG}${RESET}"
 
