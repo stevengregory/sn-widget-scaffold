@@ -4,6 +4,7 @@ source ./scripts/config.sh
 source ./scripts/messages.sh
 
 branch_checkout() {
+  echo -e "${GREEN}${BRANCH_MSG}${RESET}"
   local branch=feature/${PREFIX}${WIDGET}
   if [[ $(git branch --list ${branch}) ]]; then
     git checkout ${branch}
@@ -13,7 +14,8 @@ branch_checkout() {
 }
 
 create_base_dir() {
-  mkdir ${PREFIX}${WIDGET} && cd $_
+  echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
+  make_core_dir
   curl ${CONFIG_GIST} > config.json
   curl ${README_GIST} > README.md
   touch ${PREFIX}${WIDGET}.${UPDATE_SET}
@@ -32,6 +34,7 @@ create_widget_dir() {
   replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
   curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
   touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
+  echo -e "${GREEN}${DONE_MSG}${RESET}"
 }
 
 fetch_github_user() {
@@ -67,19 +70,21 @@ has_dashes() {
 }
 
 main() {
-  echo -e "${GREEN}${START_MSG}${RESET}"
   set_widget_name
-  echo -e "${GREEN}${BRANCH_MSG}${RESET}"
   branch_checkout
-  echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
   create_base_dir
-  echo -e "${GREEN}${UPDATE_MSG}${RESET}"
   sub_base_content
-  echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
   scaffold_option_dirs
   setup_controller_suffix
   create_widget_dir
-  echo -e "${GREEN}${DONE_MSG}${RESET}"
+}
+
+make_core_dir() {
+  if [ -d "${PREFIX}${WIDGET}" ]; then
+    cd ${PREFIX}${WIDGET}
+  else
+    mkdir ${PREFIX}${WIDGET} && cd $_
+  fi
 }
 
 replace_content() {
@@ -87,6 +92,7 @@ replace_content() {
 }
 
 scaffold_option_dirs() {
+  echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
   if [[ ${is_angular_template} == true ]]; then
     create_option_dir ${ANGULAR_TEMPLATE_DIR} ${HTML}
   fi
@@ -120,6 +126,7 @@ setup_controller_suffix() {
 }
 
 set_widget_name() {
+  echo -e "${GREEN}${START_MSG}${RESET}"
   local widget_dir=()
   for i in "${args[@]}"; do
     if [[ ${i} == "-a" || ${i} == "-s" || ${i} == "-u" ]]; then
@@ -133,6 +140,7 @@ set_widget_name() {
 }
 
 sub_base_content() {
+  echo -e "${GREEN}${UPDATE_MSG}${RESET}"
   if [[ ${widget_name} == *-* ]]; then
     local dash_readme=()
     rm=${widget_name}
