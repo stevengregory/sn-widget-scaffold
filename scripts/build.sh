@@ -45,6 +45,18 @@ replace_content() {
   sed -i '' -e "s/${1}/${2}/g" ${3}
 }
 
+scaffold_option_dirs() {
+  if [[ ${is_angular_template} = true ]]; then
+    create_option_dir ${ANGULAR_TEMPLATE_DIR} ${HTML}
+  fi
+  if [[ ${is_script_include} = true ]]; then
+    create_option_dir ${SCRIPT_INCLUDE_DIR} ${SERVER}
+  fi
+  if [[ ${is_ui_script} = true ]]; then
+    create_option_dir ${UI_SCRIPT_DIR} ${CLIENT}
+  fi
+}
+
 declare -a args=($@)
 declare -a widget_dir=()
 for i in "${args[@]}"; do
@@ -90,17 +102,7 @@ replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
 
 touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
-if [[ ${is_angular_template} = true ]]; then
-  create_option_dir ${ANGULAR_TEMPLATE_DIR} ${HTML}
-fi
-
-if [[ ${is_script_include} = true ]]; then
-  create_option_dir ${SCRIPT_INCLUDE_DIR} ${SERVER}
-fi
-
-if [[ ${is_ui_script} = true ]]; then
-  create_option_dir ${UI_SCRIPT_DIR} ${CLIENT}
-fi
+scaffold_option_dirs
 
 mkdir ${WIDGET_DIR} && cd $_
 curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
