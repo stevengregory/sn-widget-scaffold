@@ -15,7 +15,7 @@ branch_checkout() {
 
 create_base_dir() {
   echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
-  make_core_dir
+  make_core_dir ${PREFIX}${WIDGET}
   curl ${CONFIG_GIST} > config.json
   curl ${README_GIST} > README.md
   touch ${PREFIX}${WIDGET}.${UPDATE_SET}
@@ -27,7 +27,7 @@ create_option_dir() {
 }
 
 create_widget_dir() {
-  mkdir ${WIDGET_DIR} && cd $_
+  make_core_dir ${WIDGET_DIR}
   curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
   touch ${PREFIX}${WIDGET}.${CSS}
   curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
@@ -80,10 +80,10 @@ main() {
 }
 
 make_core_dir() {
-  if [ -d "${PREFIX}${WIDGET}" ]; then
-    cd ${PREFIX}${WIDGET}
+  if [ -d $1 ]; then
+    cd $1
   else
-    mkdir ${PREFIX}${WIDGET} && cd $_
+    mkdir $1 && cd $1
   fi
 }
 
