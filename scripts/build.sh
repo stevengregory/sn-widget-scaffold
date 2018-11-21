@@ -58,9 +58,9 @@ flag_options() {
   esac
 }
 
-name_has_dashes() {
+has_dashes() {
   if [[ ${args[0]} == *-* ]]; then
-    has_dashes=true
+    name_has_dashes=true
   fi
 }
 
@@ -81,8 +81,8 @@ scaffold_option_dirs() {
 }
 
 setup_controller_suffix() {
-  name_has_dashes
-  if [[ ${has_dashes} == true ]]; then
+  has_dashes
+  if [[ ${name_has_dashes} == true ]]; then
     local dash_name=()
     local in=${args[0]}
     IFS='-' read -ra input <<< "$in"
@@ -101,18 +101,22 @@ setup_controller_suffix() {
   fi
 }
 
+set_widget_name() {
+  local widget_dir=()
+  for i in "${args[@]}"; do
+    if [[ ${i} == "-a" || ${i} == "-s" || ${i} == "-u" ]]; then
+      flag_options ${i}
+    else
+      widget_dir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
+      widget_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+    fi
+  done
+  WIDGET=$(printf "%s" "${widget_dir[@]}" && echo "")
+}
+
 args=($@)
 
-declare -a widget_dir=()
-for i in "${args[@]}"; do
-  if [[ ${i} == "-a" || ${i} == "-s" || ${i} == "-u" ]]; then
-    flag_options ${i}
-  else
-    widget_dir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
-    widget_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
-  fi
-done
-WIDGET=$(printf "%s" "${widget_dir[@]}" && echo "")
+set_widget_name
 
 echo -e "${GREEN}${BRANCH_MSG}${RESET}"
 
