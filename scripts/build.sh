@@ -76,9 +76,9 @@ branch_checkout
 echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
 
 mkdir ${PREFIX}${WIDGET} && cd $_
-
-curl ${README_GIST} > README.md
 curl ${CONFIG_GIST} > config.json
+curl ${README_GIST} > README.md
+touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 
 echo -e "${GREEN}${UPDATE_MSG}${RESET}"
 
@@ -100,10 +100,9 @@ fi
 replace_content "${CONTRIB_TEMP}" "$(fetch_github_user)" config.json
 replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
 
-touch ${PREFIX}${WIDGET}.${UPDATE_SET}
+echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
 
 scaffold_option_dirs
-
 mkdir ${WIDGET_DIR} && cd $_
 curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
 touch ${PREFIX}${WIDGET}.${CSS}
@@ -129,7 +128,6 @@ fi
 
 curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
 replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
-
 touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
 
