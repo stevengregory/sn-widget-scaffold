@@ -26,6 +26,16 @@ create_option_dir() {
   touch ${1}/${PREFIX}${WIDGET}.${2}
 }
 
+create_widget_dir() {
+  mkdir ${WIDGET_DIR} && cd $_
+  curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
+  touch ${PREFIX}${WIDGET}.${CSS}
+  curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
+  replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
+  curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
+  touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
+}
+
 fetch_github_user() {
   if [[ $(git config user.name) ]]; then
     echo $(git config user.name)
@@ -107,9 +117,6 @@ replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
 echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
 
 scaffold_option_dirs
-mkdir ${WIDGET_DIR} && cd $_
-curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
-touch ${PREFIX}${WIDGET}.${CSS}
 
 if [[ $1 == *-* ]]; then
   declare -a dash_name=()
@@ -130,9 +137,6 @@ else
   controller_suffix=$(printf "%s" "${space_name[@]}" && echo "")
 fi
 
-curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
-replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
-touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
-curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
+create_widget_dir
 
 echo -e "${GREEN}${DONE_MSG}${RESET}"
