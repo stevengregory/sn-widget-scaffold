@@ -114,6 +114,26 @@ set_widget_name() {
   WIDGET=$(printf "%s" "${widget_dir[@]}" && echo "")
 }
 
+sub_base_content() {
+  if [[ ${widget_name} == *-* ]]; then
+    local dash_readme=()
+    rm=${widget_name}
+    IFS='-' read -ra content <<< "$rm"
+    for i in "${content[@]}"; do
+      if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
+        dash_readme+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+      fi
+    done
+    replace_content "${NAME_TEMP}" "${dash_readme%??}" README.md
+    replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
+  else
+    replace_content "${NAME_TEMP}" "${widget_name%?}" README.md
+    replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
+  fi
+  replace_content "${CONTRIB_TEMP}" "$(fetch_github_user)" config.json
+  replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
+}
+
 args=($@)
 
 set_widget_name
@@ -128,23 +148,7 @@ create_base_dir
 
 echo -e "${GREEN}${UPDATE_MSG}${RESET}"
 
-if [[ ${widget_name} == *-* ]]; then
-  declare -a dash_readme=()
-  RM=${widget_name}
-  IFS='-' read -ra README <<< "$RM"
-  for i in "${README[@]}"; do
-    if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
-      dash_readme+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
-    fi
-  done
-  replace_content "${NAME_TEMP}" "${dash_readme%??}" README.md
-  replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
-else
-  replace_content "${NAME_TEMP}" "${widget_name%?}" README.md
-  replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
-fi
-replace_content "${CONTRIB_TEMP}" "$(fetch_github_user)" config.json
-replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
+sub_base_content
 
 echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
 
