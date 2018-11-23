@@ -73,6 +73,7 @@ main() {
   set_widget_name
   branch_checkout
   create_base_dir
+  has_dashes
   sub_base_content
   scaffold_option_dirs
   setup_controller_suffix
@@ -115,8 +116,7 @@ scaffold_option_dirs() {
 }
 
 setup_controller_suffix() {
-  has_dashes
-  if [[ ${name_has_dashes} == true ]]; then
+  if [[ ${name_has_dashes} ]]; then
     local dash_name=()
     local in=${args[0]}
     IFS='-' read -ra input <<< "$in"
@@ -151,7 +151,7 @@ set_widget_name() {
 
 sub_base_content() {
   echo -e "${GREEN}${UPDATE_MSG}${RESET}"
-  if [[ ${widget_name} == *-* ]]; then
+  if [[ ${name_has_dashes} ]]; then
     local dash_readme=()
     rm=${widget_name}
     IFS='-' read -ra content <<< "$rm"
