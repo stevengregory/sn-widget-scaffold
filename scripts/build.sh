@@ -164,7 +164,7 @@ sub_base_content() {
     replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
   else
     replace_content "${NAME_TEMP}" "${widget_name%?}" README.md
-    replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
+    replace_content "${NAME_TEMP}" "${widget_name%?}" config.json
   fi
   replace_content "${CONTRIB_TEMP}" "$(fetch_github_user)" config.json
   replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
