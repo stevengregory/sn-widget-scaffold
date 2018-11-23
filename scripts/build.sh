@@ -87,6 +87,16 @@ make_core_dir() {
   fi
 }
 
+make_space() {
+  if [[ $1 ]]; then
+    echo " "
+  fi
+}
+
+make_uppercase() {
+  echo $(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}"$(make_space $1)"
+}
+
 replace_content() {
   sed -i '' -e "s/${1}/${2}/g" ${3}
 }
@@ -111,14 +121,14 @@ setup_controller_suffix() {
     local in=${args[0]}
     IFS='-' read -ra input <<< "$in"
     for i in "${input[@]}"; do
-      dash_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
+      dash_name+=$(make_uppercase)
     done
     controller_suffix=$(format_data ${dash_name[@]})
   else
     local space_name=()
     for i in "${args[@]}"; do
       if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
-        space_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}
+        space_name+=$(make_uppercase)
       fi
     done
     controller_suffix=$(format_data ${space_name[@]})
@@ -133,7 +143,7 @@ set_widget_name() {
       flag_options ${i}
     else
       widget_dir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
-      widget_name+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+      widget_name+=$(make_uppercase ${i})
     fi
   done
   WIDGET=$(format_data ${widget_dir[@]})
@@ -147,7 +157,7 @@ sub_base_content() {
     IFS='-' read -ra content <<< "$rm"
     for i in "${content[@]}"; do
       if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
-        dash_readme+=$(tr '[:lower:]' '[:upper:]' <<< ${i:0:1})${i:1}' '
+        dash_readme+=$(make_uppercase ${i})
       fi
     done
     replace_content "${NAME_TEMP}" "${dash_readme%??}" README.md
