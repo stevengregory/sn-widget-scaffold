@@ -34,7 +34,6 @@ create_widget_dir() {
   replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
   curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
   touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
-  echo -e "${GREEN}${DONE_MSG}${RESET}"
 }
 
 fetch_github_user() {
@@ -78,6 +77,15 @@ main() {
   scaffold_option_dirs
   setup_controller_suffix
   create_widget_dir
+  make_commit
+}
+
+make_commit() {
+  echo -e "${GREEN}${COMMIT_STATUS_MSG}${RESET}"
+  cd ../../
+  git add ${PREFIX}${WIDGET}
+  git commit -a -m "${COMMIT_MSG}"
+  echo -e "${GREEN}${DONE_MSG}${RESET}"
 }
 
 make_core_dir() {
