@@ -6,6 +6,7 @@ source ./scripts/messages.sh
 branch_checkout() {
   echo -e "${GREEN}${BRANCH_MSG}${RESET}"
   local branch=feature/${PREFIX}${WIDGET}
+  git fetch origin
   if [[ $(git branch --list ${branch}) ]]; then
     git checkout ${branch}
   else
