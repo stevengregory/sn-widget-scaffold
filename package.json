@@ -1,13 +1,11 @@
 {
-  "name": "build",
+  "name": "widget-scaffold",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Widget scaffold shell script for the ServiceNow Innovation Library",
   "scripts": {
-    "build": "./scripts/build.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "./scripts/build.sh"
   },
   "keywords": [],
-  "author": "",
+  "author": "Steven Gregory",
   "license": "ISC"
 }
