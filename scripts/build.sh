@@ -22,6 +22,13 @@ create_base_dir() {
   touch ${PREFIX}${WIDGET}.${UPDATE_SET}
 }
 
+create_controller() {
+  echo -e "${BLUE}${CONTROLLER_MSG}${RESET}"
+  setup_controller_suffix
+  curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
+  replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
+}
+
 create_option_dir() {
   mkdir ${1}
   touch ${1}/${PREFIX}${WIDGET}.${2}
@@ -31,9 +38,7 @@ create_widget_dir() {
   make_core_dir ${WIDGET_DIR}
   curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
   touch ${PREFIX}${WIDGET}.${CSS}
-  curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
-  echo -e "${BLUE}${UPDATE_MSG}${RESET}"
-  replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
+  create_controller
   curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
   touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 }
@@ -77,7 +82,6 @@ main() {
   has_dashes
   sub_base_content
   scaffold_option_dirs
-  setup_controller_suffix
   create_widget_dir
   make_commit
 }
