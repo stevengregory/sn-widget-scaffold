@@ -7,5 +7,8 @@
   },
   "keywords": [],
   "author": "Steven Gregory",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "yarn": "^1.12.3"
+  }
 }
