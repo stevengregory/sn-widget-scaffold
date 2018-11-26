@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # colors
+BLUE='\033[00;34m'
 GREEN='\033[0;32m'
 RESET='\033[0m'
 

@@ -4,7 +4,7 @@ source ./scripts/config.sh
 source ./scripts/messages.sh
 
 branch_checkout() {
-  echo -e "${GREEN}${BRANCH_MSG}${RESET}"
+  echo -e "${BLUE}${BRANCH_MSG}${RESET}"
   local branch=feature/${PREFIX}${WIDGET}
   git fetch origin
   if [[ $(git branch --list ${branch}) ]]; then
@@ -15,7 +15,7 @@ branch_checkout() {
 }
 
 create_base_dir() {
-  echo -e "${GREEN}${SCAFFOLD_MSG}${RESET}"
+  echo -e "${BLUE}${SCAFFOLD_MSG}${RESET}"
   make_core_dir ${PREFIX}${WIDGET}
   curl ${CONFIG_GIST} > config.json
   curl ${README_GIST} > README.md
@@ -82,7 +82,7 @@ main() {
 }
 
 make_commit() {
-  echo -e "${GREEN}${COMMIT_STATUS_MSG}${RESET}"
+  echo -e "${BLUE}${COMMIT_STATUS_MSG}${RESET}"
   cd ../../
   git add ${PREFIX}${WIDGET}
   git commit -a -m "${COMMIT_MSG}"
@@ -112,7 +112,7 @@ replace_content() {
 }
 
 scaffold_option_dirs() {
-  echo -e "${GREEN}${SUB_SCAFFOLD_MSG}${RESET}"
+  echo -e "${BLUE}${SUB_SCAFFOLD_MSG}${RESET}"
   if [[ ${is_angular_template} == true ]]; then
     create_option_dir ${ANGULAR_TEMPLATE_DIR} ${HTML}
   fi
@@ -145,7 +145,7 @@ setup_controller_suffix() {
 }
 
 set_widget_name() {
-  echo -e "${GREEN}${START_MSG}${RESET}"
+  echo -e "${BLUE}${START_MSG}${RESET}"
   local widget_dir=()
   for i in "${args[@]}"; do
     if [[ ${i} == "-a" || ${i} == "-s" || ${i} == "-u" ]]; then
@@ -159,7 +159,7 @@ set_widget_name() {
 }
 
 sub_base_content() {
-  echo -e "${GREEN}${UPDATE_MSG}${RESET}"
+  echo -e "${BLUE}${UPDATE_MSG}${RESET}"
   if [[ ${name_has_dashes} ]]; then
     local dash_readme=()
     rm=${widget_name}
