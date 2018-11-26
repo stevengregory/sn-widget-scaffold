@@ -9,7 +9,6 @@
   "author": "Steven Gregory",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.7.5",
     "yarn": "^1.12.3"
   }
 }
