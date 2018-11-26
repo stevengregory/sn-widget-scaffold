@@ -32,6 +32,7 @@ create_widget_dir() {
   curl ${TEMPLATE_GIST} > ${PREFIX}${WIDGET}.${HTML}
   touch ${PREFIX}${WIDGET}.${CSS}
   curl ${CONTROLLER_GIST} > ${PREFIX}${WIDGET}.${CLIENT}
+  echo -e "${BLUE}${UPDATE_MSG}${RESET}"
   replace_content ${CTRL_TEMP} ${controller_suffix} ${PREFIX}${WIDGET}.${CLIENT}
   curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
   touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
