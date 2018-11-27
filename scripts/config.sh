@@ -10,6 +10,7 @@ WIDGET_DIR=widget
 CLIENT=u-client-script.js
 CSS=u-css.scss
 HTML=body-html-template.html
+LINK=u-link-script.js
 OPTION_SCHEMA=u-option-schema.json
 SERVER=u-server-script.js
 UPDATE_SET=u-update-set.xml

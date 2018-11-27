@@ -40,6 +40,7 @@ create_widget_dir() {
   touch ${PREFIX}${WIDGET}.${CSS}
   create_controller
   curl ${SERVER_GIST} > ${PREFIX}${WIDGET}.${SERVER}
+  touch ${PREFIX}${WIDGET}.${LINK}
   touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 }
 
