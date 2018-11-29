@@ -44,6 +44,13 @@ create_widget_dir() {
   touch ${PREFIX}${WIDGET}.${OPTION_SCHEMA}
 }
 
+display_help() {
+  if [[ ${args[0]} == "-h" ]]; then
+    less docs/help.md
+    exit 0
+  fi
+}
+
 fetch_github_user() {
   if [[ $(git config user.name) ]]; then
     echo $(git config user.name)
@@ -77,6 +84,7 @@ has_dashes() {
 }
 
 main() {
+  display_help
   set_widget_name
   branch_checkout
   create_base_dir
