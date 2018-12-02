@@ -60,17 +60,19 @@ fetch_github_user() {
 }
 
 flag_options() {
-  case $1 in
-  "-a")
-    is_angular_template=true
-    ;;
-  "-s")
-    is_script_include=true
-    ;;
-  "-u")
-    is_ui_script=true
-    ;;
-  esac
+  for i in "${args[@]}"; do
+    case $i in
+    "-a")
+      is_angular_template=true
+      ;;
+    "-s")
+      is_script_include=true
+      ;;
+    "-u")
+      is_ui_script=true
+      ;;
+    esac
+  done
 }
 
 format_data() {
@@ -85,6 +87,8 @@ has_dashes() {
 
 main() {
   display_help
+  flag_options
+  trim_options
   set_widget_name
   branch_checkout
   create_base_dir
@@ -149,10 +153,8 @@ setup_controller_suffix() {
     controller_suffix=$(format_data ${dash_name[@]})
   else
     local space_name=()
-    for i in "${args[@]}"; do
-      if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
-        space_name+=$(make_uppercase)
-      fi
+    for i in "${inputs[@]}"; do
+      space_name+=$(make_uppercase)
     done
     controller_suffix=$(format_data ${space_name[@]})
   fi
@@ -161,13 +163,9 @@ setup_controller_suffix() {
 set_widget_name() {
   echo -e "${BLUE}${START_MSG}${RESET}"
   local widget_dir=()
-  for i in "${args[@]}"; do
-    if [[ ${i} == "-a" || ${i} == "-s" || ${i} == "-u" ]]; then
-      flag_options ${i}
-    else
-      widget_dir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
-      widget_name+=$(make_uppercase ${i})
-    fi
+  for i in "${inputs[@]}"; do
+    widget_dir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
+    widget_name+=$(make_uppercase ${i})
   done
   WIDGET=$(format_data ${widget_dir[@]})
 }
@@ -191,6 +189,15 @@ sub_base_content() {
   fi
   replace_content "${CONTRIB_TEMP}" "$(fetch_github_user)" config.json
   replace_content "${DIR_TEMP}" "${PREFIX}${WIDGET}" README.md
+}
+
+trim_options() {
+  inputs=()
+  for i in "${args[@]}"; do
+    if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
+      inputs+=("$i")
+    fi
+  done
 }
 
 args=($@)
