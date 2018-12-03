@@ -177,9 +177,7 @@ sub_base_content() {
     rm=${widget_name}
     IFS='-' read -ra content <<< "$rm"
     for i in "${content[@]}"; do
-      if [[ ${i} != "-a" && ${i} != "-s" && ${i} != "-u" ]]; then
-        dash_readme+=$(make_uppercase ${i})
-      fi
+      dash_readme+=$(make_uppercase ${i})
     done
     replace_content "${NAME_TEMP}" "${dash_readme%??}" README.md
     replace_content "${NAME_TEMP}" "${dash_readme%??}" config.json
