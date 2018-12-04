@@ -6,7 +6,8 @@ GREEN='\033[0;32m'
 RESET='\033[0m'
 
 # messages
-BRANCH_MSG='✨ Creating feature branch...'
+BRANCH_CREATE_MSG='✨ Creating feature branch...'
+BRANCH_SWITCH_MSG='🔀 Switching to feature branch...'
 DONE_MSG='👍 Good to go'
 COMMIT_MSG='🎉 Chore: initial commit for widget scaffold'
 COMMIT_STATUS_MSG='🎉 Making initial commit...'

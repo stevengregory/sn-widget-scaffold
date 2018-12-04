@@ -4,12 +4,13 @@ source ./scripts/config.sh
 source ./scripts/messages.sh
 
 branch_checkout() {
-  echo -e "${BLUE}${BRANCH_MSG}${RESET}"
   local branch=feature/${PREFIX}${WIDGET}
   git fetch origin
   if [[ $(git branch --list ${branch}) ]]; then
+    echo -e "${BLUE}${BRANCH_SWITCH_MSG}${RESET}"
     git checkout ${branch}
   else
+    echo -e "${BLUE}${BRANCH_CREATE_MSG}${RESET}"
     git checkout -b ${branch} origin/master
   fi
 }
