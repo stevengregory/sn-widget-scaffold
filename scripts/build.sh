@@ -63,13 +63,13 @@ fetch_github_user() {
 flag_options() {
   for i in "${args[@]}"; do
     case $i in
-    "-a")
+    -a)
       is_angular_template=true
       ;;
-    "-s")
+    -s)
       is_script_include=true
       ;;
-    "-u")
+    -u)
       is_ui_script=true
       ;;
     esac
