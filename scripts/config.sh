@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # directories
 ANGULAR_TEMPLATE_DIR=angular-template

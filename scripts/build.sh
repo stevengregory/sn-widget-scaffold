@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 source ./scripts/config.sh
 source ./scripts/messages.sh
