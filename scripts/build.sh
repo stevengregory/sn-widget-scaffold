@@ -61,6 +61,7 @@ fetch_github_user() {
 }
 
 flag_options() {
+  echo -e "${BLUE}${START_MSG}${RESET}"
   for i in "${args[@]}"; do
     case $i in
     -a)
@@ -162,7 +163,6 @@ setup_controller_suffix() {
 }
 
 set_widget_name() {
-  echo -e "${BLUE}${START_MSG}${RESET}"
   local widget_dir=()
   for i in "${inputs[@]}"; do
     widget_dir+=$(echo -${i} | tr '[:upper:]' '[:lower:]')
