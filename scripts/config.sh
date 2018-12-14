@@ -2,6 +2,8 @@
 
 # directories
 ANGULAR_TEMPLATE_DIR=angular-template
+IMAGE_DIR=images
+SRC_DIR=src
 SCRIPT_INCLUDE_DIR=script-include
 UI_SCRIPT_DIR=ui-script
 WIDGET_DIR=widget
